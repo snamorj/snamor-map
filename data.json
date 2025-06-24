@@ -1,0 +1,45 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Property 1",
+        "description": "Erf 4413 — Rocky Crest<br>Owner: Mr. Joao bauleth<br>Valuation: N$1,200,000<br>Zoning: Residential 1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17.044154, -22.575549]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Property 2",
+        "description": "Erf 5182 — Rocky Crest<br>Owner: Mrs. A Kapenda<br>Valuation: N$980,000<br>Zoning: General Residential"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17.045305, -22.577830]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Property Boundary 1",
+        "description": "Boundary for Property 1"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [17.044372, -22.575532],
+          [17.044147, -22.575393],
+          [17.044001, -22.575607],
+          [17.044100, -22.575648],
+          [17.044139, -22.575643],
+          [17.044372, -22.575532]
+        ]]
+      }
+    }
+  ]
+}

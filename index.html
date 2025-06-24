@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Property Viewer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { height: 100vh; width: 100%; }
+    .info {
+      padding: 10px;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script>
+    // Initialize map centered on Rocky Crest
+    const map = L.map('map').setView([-22.575, 17.08], 14);
+
+    // Add OpenStreetMap base layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // Custom icons
+    const propertyIcon = L.divIcon({
+      className: 'property-marker',
+      html: '🏠',
+      iconSize: [30, 30],
+      popupAnchor: [0, -15]
+    });
+
+    // Load and display GeoJSON data
+    fetch('data.geojson')
+      .then(response => response.json())
+      .then(data => {
+        L.geoJSON(data, {
+          pointToLayer: (feature, latlng) => {
+            return L.marker(latlng, { icon: propertyIcon });
+          },
+          polygonStyle: {
+            color: '#3388ff',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.3
+          },
+          onEachFeature: (feature, layer) => {
+            const props = feature.properties;
+            let content = `<div class="info">
+              <h3>${props.name || 'Property'}</h3>`;
+            
+            if (props.description) {
+              content += props.description
+                .replace(/<[^>]+>/g, '<br>')
+                .replace(/(<br>)+/g, '<br>');
+            }
+            
+            content += '</div>';
+            layer.bindPopup(content);
+          }
+        }).addTo(map);
+      })
+      .catch(error => {
+        console.error('Error loading GeoJSON:', error);
+        alert('Failed to load property data. Check console for details.');
+      });
+  </script>
+</body>
+</html>
